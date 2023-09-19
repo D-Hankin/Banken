@@ -12,18 +12,53 @@ public class Banken {
             String menuChoice = input.nextLine();
 
             switch (menuChoice) {
-                case "1":  //Show the user their balance
+                case "1":  //Show the user their balance (Janne; Att lägga det här i egen metod kändes onödigt krångligt men hade kunnat gör det med menuChoice som parameter)
                     System.out.print("\033[H\033[2J");  
                     System.out.flush(); 
-                    System.out.println("\n\t Your current balance is SEK" + balance + ".\n\t Press enter to return to the menu...");
+                    System.out.println("\n\t Your current balance is SEK" + balance + ".\n\n\t Press enter to return to the menu...");
                     input.nextLine();
                     System.out.print("\033[H\033[2J");  
                     System.out.flush(); 
                     break;
 
                 case "2":
+                    Boolean runDeposit = true;
+                    System.out.print("\033[H\033[2J");  
+                    System.out.flush(); 
 
-                    break;
+                    while (runDeposit) {
+                        System.out.println("\n\t We now offer a choice of 3 currencies for deposits, choose from:\n\n\t [1] SEK Swedish Kronor\n\t [2] £ UK Sterling\n\t [3] € Euro\n\t [4] Return to main menu\n\n\t *My soul crushing exchange rates apply");
+                        menuChoice = input.nextLine();
+
+                        switch (menuChoice) {
+                            case "1":
+                                System.out.print("\033[H\033[2J");  
+                                System.out.flush(); 
+                            break;
+
+                            case "2":
+                                System.out.print("\033[H\033[2J");  
+                                System.out.flush(); 
+                            break;
+
+                            case "3":
+                                System.out.print("\033[H\033[2J");  
+                                System.out.flush(); 
+                            break;
+
+                            case "4":
+                                runDeposit = false;
+                                System.out.print("\033[H\033[2J");  
+                                System.out.flush(); 
+                                break;
+
+                            default:
+                                System.out.print("\033[H\033[2J");  
+                                System.out.flush(); 
+                                System.out.println("\t That is not a valid choice! Try again...\n");
+                                break;
+                        }
+                    }
 
                 case "3": 
 
@@ -32,15 +67,15 @@ public class Banken {
                 case "4":
                     System.out.print("\033[H\033[2J");  
                     System.out.flush(); 
-                    System.out.println("\n\tThank you for visiting! Please return with more funding for my New World Order soon!");
+                    System.out.println("\n\t Thank you for visiting! Please return with more funding for my New World Order soon!\n\n");
                     run = false;
                     break;
 
                 default:
                     System.out.print("\033[H\033[2J");  
                     System.out.flush(); 
-                    System.out.println("\tThat is not a valid choice! Try again...\n");
-                    continue;
+                    System.out.println("\t That is not a valid choice! Try again...\n");
+                    break;
             }
         
         }
