@@ -34,29 +34,62 @@ public class Banken {
                             case "1":
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
+                                System.out.print(choiceOfCurrency(menuChoice));
+                                Boolean validInput = isNumber(userInput);
+
+                                if (validInput) 
+                                    balance = balanceUpdateIncludingConversion(userInput);
+                                else
+                                    System.out.println(incorrectInput());
+                                    runDeposit = exitMenu("4");
+                                
+                                System.out.println(successfulDeposit());
+
                             break;
 
                             case "2":
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
+                                System.out.print(choiceOfCurrency(menuChoice));
+                                validInput = isNumber(userInput);
+
+                                if (validInput) 
+                                    balance = balanceUpdateIncludingConversion(userInput);
+                                else
+                                    System.out.println(incorrectInput());
+                                    runDeposit = exitMenu("4");
+                                
+                                System.out.println(successfulDeposit());
+
                             break;
 
                             case "3":
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
+                                System.out.print(choiceOfCurrency(menuChoice));
+                                validInput = isNumber(userInput);
+
+                                if (validInput) 
+                                    balance = balanceUpdateIncludingConversion(userInput);
+                                else
+                                    System.out.println(incorrectInput());
+                                    runDeposit = exitMenu("4");
+                                
+                                System.out.println(successfulDeposit());
+
                             break;
 
                             case "4":
                                 runDeposit = exitMenu(menuChoice);
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
-                                break;
+                            break;
 
                             default:
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
-                                System.out.println("\t That is not a valid choice! Try again...\n");
-                                break;
+                                System.out.println(incorrectInput());
+                            break;
                         }
                     }
 
@@ -74,7 +107,7 @@ public class Banken {
                 default:
                     System.out.print("\033[H\033[2J");  
                     System.out.flush(); 
-                    System.out.println("\t That is not a valid choice! Try again...\n");
+                    System.out.println(incorrectInput());
                     break;
             }
         
@@ -90,10 +123,24 @@ public class Banken {
             return false;
     }
 
+    public static String incorrectInput() {
+        return "\t That is not a valid choice! Try again...\n";
+    }
+
     public static String showBalance(int balance) {
         return "\n\t Your current balance is SEK" + balance + ".\n\n\t Press enter to return to the menu...";
     }
 
+    public static String choiceOfCurrency(String menuChoice) {
+        if (menuChoice.equals("1"))
+            return "\n\tYou have chosen to deposit SEK Swedish Kronor!\n\n\t Please enter the amount you would like to deposit: ";
+        else if (menuChoice.equals("2"))
+            return "\n\tYou have chosen to deposit £ UK Sterling!\n\n\t Please enter the amount you would like to deposit: ";
+        else if (menuChoice.equals("3"))
+            return "\n\tYou have chosen to deposit $ US Dollars!\n\n\t Please enter the amount you would like to deposit: ";
+        else 
+            return incorrectInput();
+    }
     public static Boolean exitMenu(String menuChoice) {
         if(menuChoice.equals("4"))   
             return false;
