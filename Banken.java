@@ -39,9 +39,20 @@ public class Banken {
                                 System.out.flush(); 
                                 System.out.print(choiceOfCurrency("deposit Swedish Kronor")); 
 
-                                if (isNumber(userInput))
-                                    balance = balanceUpdate(1, userInput.nextInt(), balance);
+                                if (isNumber(userInput)){
+                                    int depositAmount = userInput.nextInt();
+                                    if (depositAmount > 0)
+                                        balance = balanceUpdate(1, depositAmount, balance);
+                                    else {
+                                        System.out.print("\033[H\033[2J");  
+                                        System.out.flush(); 
+                                        System.out.println(incorrectInput());
+                                        continue;
+                                    }
+                                }
                                 else {
+                                    System.out.print("\033[H\033[2J");  
+                                    System.out.flush(); 
                                     System.out.println(incorrectInput());
                                     continue;
                                 }
@@ -60,9 +71,19 @@ public class Banken {
 
                                 if (isNumber(userInput)) {
                                     int depositAmount = userInput.nextInt() * 12;
-                                    balance = balanceUpdate(1, depositAmount, balance);
+                                    if (depositAmount > 0) {
+                                        balance = balanceUpdate(1, depositAmount, balance);
+                                    }
+                                    else {
+                                        System.out.print("\033[H\033[2J");  
+                                        System.out.flush(); 
+                                        System.out.println(incorrectInput());
+                                        continue;
+                                    }
                                 }
                                 else {
+                                    System.out.print("\033[H\033[2J");  
+                                    System.out.flush(); 
                                     System.out.println(incorrectInput());
                                     continue;
                                 }
@@ -81,9 +102,19 @@ public class Banken {
                                 
                                 if (isNumber(userInput)) {
                                     int depositAmount = userInput.nextInt() * 11;
-                                    balance = balanceUpdate(1, depositAmount, balance);
+                                    if (depositAmount > 0) {
+                                        balance = balanceUpdate(1, depositAmount, balance);
+                                    }
+                                    else {
+                                        System.out.print("\033[H\033[2J");  
+                                        System.out.flush(); 
+                                        System.out.println(incorrectInput());
+                                        continue;
+                                    }
                                 }
                                 else {
+                                    System.out.print("\033[H\033[2J");  
+                                    System.out.flush(); 
                                     System.out.println(incorrectInput());
                                     continue;
                                 }
@@ -137,8 +168,16 @@ public class Banken {
 
                                 if (isNumber(userInput)) {
                                     int withdrawalAmount = userInput.nextInt();
-                                    if (withdrawalAmount != 0)
-                                        balance = balanceUpdate(2, withdrawalAmount, balance);
+                                    if (withdrawalAmount > 0) {
+                                        if (withdrawalAmount != 0)
+                                            balance = balanceUpdate(2, withdrawalAmount, balance);
+                                    }
+                                    else {
+                                        System.out.print("\033[H\033[2J");  
+                                        System.out.flush(); 
+                                        System.out.println(incorrectInput());
+                                        continue;
+                                    }
                                 }
                                 else {
                                     System.out.println(incorrectInput());
@@ -166,10 +205,20 @@ public class Banken {
 
                                 if (isNumber(userInput)) {
                                     int withdrawalAmount = userInput.nextInt() * 12;
-                                    if (withdrawalAmount != 0)
-                                        balance = balanceUpdate(2, withdrawalAmount, balance);
+                                    if (withdrawalAmount > 0) {
+                                        if (withdrawalAmount != 0)
+                                            balance = balanceUpdate(2, withdrawalAmount, balance);
+                                    }
+                                    else {
+                                        System.out.print("\033[H\033[2J");  
+                                        System.out.flush(); 
+                                        System.out.println(incorrectInput());
+                                        continue;
+                                    }
                                 }
                                 else {
+                                    System.out.print("\033[H\033[2J");  
+                                    System.out.flush(); 
                                     System.out.println(incorrectInput());
                                     continue;
                                 }
@@ -195,10 +244,20 @@ public class Banken {
 
                                 if (isNumber(userInput)) {
                                     int withdrawalAmount = userInput.nextInt() * 11;
-                                    if (withdrawalAmount != 0)
-                                        balance = balanceUpdate(2, withdrawalAmount, balance);
+                                    if (withdrawalAmount > 0) {
+                                        if (withdrawalAmount != 0)
+                                            balance = balanceUpdate(2, withdrawalAmount, balance);
+                                    }
+                                    else {
+                                        System.out.print("\033[H\033[2J");  
+                                        System.out.flush(); 
+                                        System.out.println(incorrectInput());
+                                        continue;
+                                    }
                                 }
                                 else {
+                                    System.out.print("\033[H\033[2J");  
+                                    System.out.flush(); 
                                     System.out.println(incorrectInput());
                                     continue;
                                 }
@@ -249,7 +308,6 @@ public class Banken {
                 default:
                     System.out.print("\033[H\033[2J");  
                     System.out.flush(); 
-                   // System.out.println(incorrectInput());
                     break;
             }
         
@@ -266,7 +324,7 @@ public class Banken {
     }
 
     public static String incorrectInput() {
-        return "\t That is not a valid choice! Try again...\n";
+        return "\tThat is not a valid choice! Try again...\n";
     }
 
     public static String showBalance(int balance) {
