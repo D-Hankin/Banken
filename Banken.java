@@ -8,7 +8,7 @@ public class Banken {
         int balance = 0;
 
         while (run) { //Welcome user to the bank and show them menu. Only numbers (input as string) 1 - 4 will give valid menu choice, otherwise return to menu.
-            System.out.println("\t-------------------------------------\n\t*** WELCOME TO THE BANK OF DAVID! ***\n\t-------------------------------------\n\t Please choose from the options below \n\n\t [1] Check balance\n\t [2] Make a deposit\n\t [3] Make a withdrawal\n\t [4] Exit bank");
+            System.out.println("\t-------------------------------------\n\t*** WELCOME TO THE BANK OF DAVID! ***\n\t-------------------------------------\n\tPlease choose from the options below \n\n\t [1] Check balance\n\t [2] Make a deposit\n\t [3] Make a withdrawal\n\t [4] Exit bank");
             String menuChoice = userInput.nextLine();
 
             switch (menuChoice) {
@@ -30,13 +30,14 @@ public class Banken {
 
                     while (runDeposit) {
                         System.out.println("\n\t We now offer a choice of 3 currencies for transactions, choose from:\n\n\t [1] Swedish Kronor\n\t [2] Great British Pounds\n\t [3] Euro\n\t [4] Return to main menu\n\n\t *Whole units only please, we don't do coins! \n\n\t**My soul crushing exchange rates apply");
+                        
                         if (isNumber(userInput)) {
                             depositMenuChoice = userInput.nextInt();
 
-                            if (depositMenuChoice == 1){
+                            if (depositMenuChoice == 1) {
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
-                                System.out.print(choiceOfCurrency("Swedish Kronor")); 
+                                System.out.print(choiceOfCurrency("deposit Swedish Kronor")); 
 
                                 if (isNumber(userInput))
                                     balance = balanceUpdate(1, userInput.nextInt(), balance);
@@ -48,7 +49,6 @@ public class Banken {
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
                                 System.out.println(successfulTransaction("SEK"));
-                                System.out.println("Please press enter to return to the main menu...");
                                 userInput.nextLine();
                                 runDeposit = false;
                             }
@@ -56,7 +56,7 @@ public class Banken {
                             else if (depositMenuChoice == 2) {
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
-                                System.out.print(choiceOfCurrency("Great British Pounds"));
+                                System.out.print(choiceOfCurrency("deposit Great British Pounds"));
 
                                 if (isNumber(userInput)) {
                                     int depositAmount = userInput.nextInt() * 12;
@@ -70,7 +70,6 @@ public class Banken {
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
                                 System.out.println(successfulTransaction("GBP"));
-                                System.out.println("Please press enter to return to the main menu...");
                                 userInput.nextLine();
                                 runDeposit = false;
                             }
@@ -78,7 +77,7 @@ public class Banken {
                             else if (depositMenuChoice == 3) {
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
-                                System.out.print(choiceOfCurrency("Euros"));
+                                System.out.print(choiceOfCurrency("deposit Euros"));
                                 
                                 if (isNumber(userInput)) {
                                     int depositAmount = userInput.nextInt() * 11;
@@ -92,7 +91,6 @@ public class Banken {
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
                                 System.out.println(successfulTransaction("EUR"));
-                                System.out.println("Please press enter to return to the main menu...");
                                 userInput.nextLine();
                                 runDeposit = false;
                             }
@@ -101,19 +99,21 @@ public class Banken {
                                 runDeposit = false;
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
+                                break;
                             }
 
                             else {
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
                                 System.out.println(incorrectInput());
-                                continue;
+                                userInput.nextLine();
                             }
                         }
                         else {
                             System.out.print("\033[H\033[2J");  
                             System.out.flush(); 
                             System.out.println(incorrectInput());
+                            userInput.nextLine();
                         }
                     }
                     break;
@@ -128,14 +128,18 @@ public class Banken {
                         System.out.println("\n\t We now offer a choice of 3 currencies for transactions, choose from:\n\n\t [1] Swedish Kronor\n\t [2] Great British Pounds\n\t [3] Euro\n\t [4] Return to main menu\n\n\t *Whole units only please, we don't do coins! \n\n\t**My soul crushing exchange rates apply");
                         if (isNumber(userInput)) {
                             withdrawalMenuChoice = userInput.nextInt();
+                            int checkIfBalanceHasChanged = balance;
 
                             if (withdrawalMenuChoice == 1){
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
-                                System.out.print(choiceOfCurrency("Swedish Kronor")); 
+                                System.out.print(choiceOfCurrency("withdraw Swedish Kronor")); 
 
-                                if (isNumber(userInput))
-                                    balance = balanceUpdate(1, userInput.nextInt(), balance);
+                                if (isNumber(userInput)) {
+                                    int withdrawalAmount = userInput.nextInt();
+                                    if (withdrawalAmount != 0)
+                                        balance = balanceUpdate(2, withdrawalAmount, balance);
+                                }
                                 else {
                                     System.out.println(incorrectInput());
                                     continue;
@@ -143,20 +147,27 @@ public class Banken {
                                 
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
-                                System.out.println(successfulTransaction("SEK"));
-                                System.out.println("Please press enter to return to the main menu...");
-                                userInput.nextLine();
-                                runDeposit = false;
+
+                                if (checkIfBalanceHasChanged != balance) {
+                                    System.out.println(successfulTransaction("SEK"));
+                                    userInput.nextLine();
+                                    runWithdrawal = false;
+                                }
+                                else {
+                                    System.out.println(attemptAtNegativeBalance());
+                                    continue;
+                                } 
                             }
 
                             else if (withdrawalMenuChoice == 2) {
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
-                                System.out.print(choiceOfCurrency("Great British Pounds"));
+                                System.out.print(choiceOfCurrency("withdraw Great British Pounds"));
 
                                 if (isNumber(userInput)) {
-                                    int depositAmount = userInput.nextInt() * 12;
-                                    balance = balanceUpdate(1, depositAmount, balance);
+                                    int withdrawalAmount = userInput.nextInt() * 12;
+                                    if (withdrawalAmount != 0)
+                                        balance = balanceUpdate(2, withdrawalAmount, balance);
                                 }
                                 else {
                                     System.out.println(incorrectInput());
@@ -165,20 +176,27 @@ public class Banken {
                                 
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
-                                System.out.println(successfulTransaction("GBP"));
-                                System.out.println("Please press enter to return to the main menu...");
-                                userInput.nextLine();
-                                runDeposit = false;
+
+                                if (checkIfBalanceHasChanged != balance) {
+                                    System.out.println(successfulTransaction("GBP"));
+                                    userInput.nextLine();
+                                    runWithdrawal = false;
+                                }
+                                else {
+                                    System.out.println(attemptAtNegativeBalance());
+                                    continue;
+                                } 
                             }
                             
                             else if (withdrawalMenuChoice == 3) {
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
-                                System.out.print(choiceOfCurrency("Euros"));
-                                
+                                System.out.print(choiceOfCurrency("withdraw Euros"));
+
                                 if (isNumber(userInput)) {
-                                    int depositAmount = userInput.nextInt() * 11;
-                                    balance = balanceUpdate(1, depositAmount, balance);
+                                    int withdrawalAmount = userInput.nextInt() * 11;
+                                    if (withdrawalAmount != 0)
+                                        balance = balanceUpdate(2, withdrawalAmount, balance);
                                 }
                                 else {
                                     System.out.println(incorrectInput());
@@ -187,14 +205,20 @@ public class Banken {
                                 
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
-                                System.out.println(successfulTransaction("EUR"));
-                                System.out.println("Please press enter to return to the main menu...");
-                                userInput.nextLine();
-                                runDeposit = false;
+
+                                if (checkIfBalanceHasChanged != balance) {
+                                    System.out.println(successfulTransaction("EUR"));
+                                    userInput.nextLine();
+                                    runWithdrawal = false;
+                                }
+                                else {
+                                    System.out.println(attemptAtNegativeBalance());
+                                    continue;
+                                }                              
                             }
 
                             else if (withdrawalMenuChoice == 4) {
-                                runDeposit = false;
+                                runWithdrawal = false;
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush();
                             }
@@ -203,12 +227,14 @@ public class Banken {
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
                                 System.out.println(incorrectInput());
+                                userInput.nextLine();
                             }
                         }
                         else {
                             System.out.print("\033[H\033[2J");  
                             System.out.flush(); 
                             System.out.println(incorrectInput());
+                            userInput.nextLine();
                         }
                     }
                     break;
@@ -223,7 +249,7 @@ public class Banken {
                 default:
                     System.out.print("\033[H\033[2J");  
                     System.out.flush(); 
-                    System.out.println(incorrectInput());
+                   // System.out.println(incorrectInput());
                     break;
             }
         
@@ -251,8 +277,8 @@ public class Banken {
         System.out.print("\033[H\033[2J");  
         System.out.flush();
 
-        if (currency.equals("Swedish Kronor") || currency.equals("Great British Pounds") || currency.equals("Euros"))
-            return "\n\tYou have chosen " + currency + "!\n\n\t Please enter the amount you would like to deposit/withdraw: ";
+        if (currency.equals("deposit Swedish Kronor") || currency.equals("deposit Great British Pounds") || currency.equals("deposit Euros") || currency.equals("withdraw Swedish Kronor") || currency.equals("withdraw Great British Pounds") || currency.equals("withdraw Euros"))
+            return "\n\tYou have chosen to " + currency + "!\n\n\t Please enter the amount you would like to deposit/withdraw: ";
         else 
             return incorrectInput();
     }
@@ -268,10 +294,14 @@ public class Banken {
     }
 
     public static Boolean checkNegativeBalance (int balance, int amount){
-        if (balance - amount > 0)
+        if (balance - amount >= 0)
             return true;
         else    
             return false;
+    }
+
+    public static String attemptAtNegativeBalance() {
+        return "\n\tTrying to withdraw money you don't have?? This isn't a charity you know!";
     }
 
     public static String successfulTransaction (String currency) {
