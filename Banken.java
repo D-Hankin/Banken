@@ -22,7 +22,10 @@ public class Banken {
                     System.out.flush(); 
                     break;
 
-                case "2":
+                case "2": //User id offered a choce of 3 currencies to make a deposit with. Exchange rates are calculated and the resulting balance is updated (in SEK).
+                          //In depositMenu stage users are unable to input letters or any number outside the possible choices. When entering amount to deposit users cannot enter
+                          //letters or negative values.
+                          //User is kept within deposit menu until choosing to leave. With a successful deposit user is returned to main menu.
                     Boolean runDeposit = true;
                     int depositMenuChoice;
                     System.out.print("\033[H\033[2J");  
@@ -63,7 +66,6 @@ public class Banken {
                                 userInput.nextLine();
                                 runDeposit = false;
                             }
-
                             else if (depositMenuChoice == 2) {
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
@@ -125,14 +127,12 @@ public class Banken {
                                 userInput.nextLine();
                                 runDeposit = false;
                             }
-
                             else if (depositMenuChoice == 4) {
                                 runDeposit = false;
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
                                 break;
                             }
-
                             else {
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
@@ -149,7 +149,10 @@ public class Banken {
                     }
                     break;
 
-                case "3": 
+                case "3": //User id offered a choce of 3 currencies to make a deposit with. Exchange rates are calculated and the resulting balance is updated (in SEK).
+                          //In withdrawalMenu stage users are unable to input letters or any number outside the possible choices. When entering amount to withdraw users cannot enter
+                          //letters or negative integers.
+                          //User is kept in withdrawal menu (i.e. in  the case of invalid inputs) until choosing to leave. After a successful withdrawal user returns to main menu.
                     Boolean runWithdrawal = true;
                     int withdrawalMenuChoice;
                     System.out.print("\033[H\033[2J");  
@@ -235,8 +238,7 @@ public class Banken {
                                     System.out.println(attemptAtNegativeBalance());
                                     continue;
                                 } 
-                            }
-                            
+                            }                            
                             else if (withdrawalMenuChoice == 3) {
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
@@ -275,13 +277,11 @@ public class Banken {
                                     continue;
                                 }                              
                             }
-
                             else if (withdrawalMenuChoice == 4) {
                                 runWithdrawal = false;
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush();
                             }
-
                             else {
                                 System.out.print("\033[H\033[2J");  
                                 System.out.flush(); 
@@ -298,25 +298,23 @@ public class Banken {
                     }
                     break;
 
-                case "4":
+                case "4": //User exits program.
                     System.out.print("\033[H\033[2J");  
                     System.out.flush(); 
                     run = exitMenu(menuChoice);
                     System.out.println(goodbyeMessage(run));
                     break;
 
-                default:
+                default: //Main menu is shown with all invalid inputs when in main menu.
                     System.out.print("\033[H\033[2J");  
                     System.out.flush(); 
                     break;
-            }
-        
+            }   
         }
-
         userInput.close();
     }
 
-    public static Boolean isNumber(Scanner userInput) {
+    public static Boolean isNumber(Scanner userInput) { 
         if (userInput.hasNextInt())
             return true;      
         else 
@@ -381,8 +379,8 @@ public class Banken {
 
     public static String goodbyeMessage (Boolean run) {
         if (run == false)
-            return "\n\t Thank you for visiting! Please return with more funding for my New World Order soon!\n\n";
+            return "\n\tThank you for visiting! Please return with more funding for my New World Order soon!\n\n";
         else 
-            return "This response is impossible!";
+            return "How did you get here Janne? This response should be impossible!";
     }
 }
