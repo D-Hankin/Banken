@@ -1,4 +1,4 @@
 # Banken
-En enkel javaprogram i form av en bankautomat
-- Användaren ska kunna titta på saldot, sätta in och ta ut pengar.
-- Saldon får inte bli minus
+A simple console program in the form of a bank ATM.
+- The user should be able to see their balance, deposit and withdraw money.
+- Balance cannot be negative.
